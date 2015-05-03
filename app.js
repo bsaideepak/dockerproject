@@ -35,8 +35,8 @@ var allowCrossDomain = function(req, res, next) {
     next();
 }
 
-app.post('/login', controller.login);
-app.post('/signup', controller.signup);
+//app.post('/login', controller.login);
+//app.post('/signup', controller.signup);
 app.post('/runCode', controller.runCode);
 
 
