@@ -40,11 +40,6 @@ var allowCrossDomain = function(req, res, next) {
 app.post('/runCode', controller.runCode);
 
 
-app.all('*', function(req, res){
-    res.render('homepage');
-    //res.send(404);
-})
-
 http.createServer(app).listen(3030, function(){
   console.log('Express server listening on port 3030');
 });

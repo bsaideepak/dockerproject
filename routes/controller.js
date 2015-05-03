@@ -108,7 +108,7 @@ exports.runCode = function (req, res) {
       data = "";
     }
 
-    fs.createFile("/Users/sai/Documents/cmpe283/test/Dockerfile", data, function(err,result){
+    fs.createFile("/test/Dockerfile", data, function(err,result){
 
       if(err){
         return res.send('Error Creating Dockerfile: '+err);
