@@ -5,8 +5,8 @@ var Docker = require('dockerode');
 var Git = require("nodegit");
 var ghdownload = require('github-download');
 var exec = require('exec');
-var docker = new Docker({'host':'192.168.59.103','port':'2376'});
-var tar = require('node-zip');
+var docker = new Docker({socketPath: '/var/run/docker.sock'});
+var tar = require('tar-fs');
 var fs = require('fs');
 
 exports.login = function (req, res) {
@@ -115,20 +115,20 @@ exports.runCode = function (req, res) {
       }
 
       else{
-        // tar.file('test.zip',"/Users/sai/Documents/cmpe283/test/Dockerfile")
-        // //Docker Build.
-        // console.log("Successful Tar packing. I WAS HERE.");
-        // docker.buildImage("./test.tar", {t: "imageName"},function (err, response){
-        //   //...
-        //   if(err){
-        //     console.log("Error with Docker Image Creation."+err);
-        //   }
-        //   else{
-        //     return res.send("Successful creation of docker file.");
-        //   }
-        // });
+        tar.pack('./test').pipe(fs.createWriteStream('test.tar'),function(){
+          //Docker Build.
+          console.log("Successful Tar packing. I WAS HERE.");
+          docker.buildImage("./test.tar", {t: "imageName"},function (err, response){
+            //...
+            if(err){
+              console.log("Error with Docker Image Creation."+err);
+            }
+            else{
+              return res.send("Successful creation of docker file.");
+            }
+          });
+        })
         //Send Output of execution.
-        var docker1 = new Docker();
       }
     });
 
